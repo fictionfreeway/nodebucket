@@ -5,6 +5,11 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 
+// import swagger
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+
+// import employee API
 const EmployeeAPI = require('./routes/employee-api');
 
 const app = express(); // Express variable.
@@ -31,6 +36,22 @@ mongoose.connect(CONN).then(() => {
 }).catch(err => {
   console.log('MongoDB Error: ' + err.message);
 });
+
+
+// configure and implement swagger UI for API testing
+const options = {
+  definition: {
+      openapi: '3.0.0',
+      info: {
+          title: 'Employees API',
+          version: '1.0.0',
+      },
+  },
+  apis: ['./server/routes/employee-api.js']
+};
+
+const openapiSpecification = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
 
 // APIs

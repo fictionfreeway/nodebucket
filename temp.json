@@ -1,0 +1,23 @@
+{
+    "empId": 1010,
+    "firstName": "Sookie",
+    "lastName": "Suzuki",
+    "upcomingTasks": [
+        {
+            "title": "task1",
+            "dueDate": 20220130
+        }
+    ],
+    "currentTasks": [
+        {
+            "title": "task2",
+            "dueDate": 20220110
+        }
+    ],
+    "completedTasks": [
+        {
+            "title": "task3",
+            "dueDate": 20220103
+        }
+    ]
+}
