@@ -1,3 +1,10 @@
+/* 
+Title: index.js
+Author: William Watlington
+Date: 10 January 2023
+Description: main express server file for nodebucket
+*/
+
 /**
  * Require statements
  */
