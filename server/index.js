@@ -5,6 +5,8 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 
+const EmployeeAPI = require('./routes/employee-api');
+
 const app = express(); // Express variable.
 
 /**
@@ -19,7 +21,7 @@ app.use('/', express.static(path.join(__dirname, '../dist/nodebucket')));
 const PORT = process.env.PORT || 3000;
 
 // TODO: This line will be replaced with your database connection string (including username/password).
-const CONN = 'mongodb+srv://superadmin:s3cret@cluster0-lujih.mongodb.net/nodebucket?retryWrites=true&w=majority';
+const CONN = 'mongodb+srv://nodebucket_user:n8BGspSTVkuw1nQV@cluster0.ug54bka.mongodb.net/nodebucket?retryWrites=true&w=majority';
 
 /**
  * Database connection.
@@ -29,6 +31,11 @@ mongoose.connect(CONN).then(() => {
 }).catch(err => {
   console.log('MongoDB Error: ' + err.message);
 });
+
+
+// APIs
+app.use('/api', EmployeeAPI);
+
 
 // Wire-up the Express server.
 app.listen(PORT, () => {
