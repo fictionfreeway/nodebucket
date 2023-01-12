@@ -10,6 +10,7 @@ Description: routes for employee API in nodebucket application
 const express = require('express');
 const Employee = require('../models/employee');
 const router = express.Router();
+const config = require('../data/config.json');
 
 
 /**
@@ -36,7 +37,7 @@ const router = express.Router();
  *        description: MongoDB Exception
  *          
  */
-router.get('/employees/:empId', async(req, res) => {
+router.get('/:empId', async(req, res) => {
     try {
         // attempts to find one employee document with matching empId, returns that document or returns error
         Employee.findOne({ 'empId': req.params.empId }, function(err, result) {
@@ -44,7 +45,7 @@ router.get('/employees/:empId', async(req, res) => {
             if(err) {
                 console.log(err);
                 res.status(501).send({
-                    'message': `MongoDB error: ${err.message}`
+                    'err':  config.mongoServerError + '+ ' + err.message
                 })
             } 
             // returns user document as JSON if no error encountered
@@ -59,7 +60,7 @@ router.get('/employees/:empId', async(req, res) => {
     catch(e) {
         console.log(e);
         res.status(500).send({
-            'err': 'Internal server error.'
+            'err': config.serverError
         })
     }
 })

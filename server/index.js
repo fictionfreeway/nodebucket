@@ -19,6 +19,9 @@ const swaggerJsdoc = require('swagger-jsdoc');
 // import employee API
 const EmployeeAPI = require('./routes/employee-api');
 
+// import config file
+const config = require('./data/config.json');
+
 const app = express(); // Express variable.
 
 /**
@@ -33,17 +36,29 @@ app.use('/', express.static(path.join(__dirname, '../dist/nodebucket')));
 const PORT = process.env.PORT || 3000;
 
 // TODO: This line will be replaced with your database connection string (including username/password).
-const CONN = 'mongodb+srv://nodebucket_user:n8BGspSTVkuw1nQV@cluster0.ug54bka.mongodb.net/nodebucket?retryWrites=true&w=majority';
+const CONN = config.dbConn;
 
 /**
  * Database connection.
  */
-mongoose.connect(CONN).then(() => {
-  console.log('Connection to the database was successful');
-}).catch(err => {
-  console.log('MongoDB Error: ' + err.message);
-});
+mongoose.set('strictQuery', false); // set strictQuery to false for mongoose 7
 
+mongoose.connect(CONN).then(
+  () => {
+  console.log('Connection to the database was successful');
+  },
+  err => {
+    console.log(config.mongoServerError + ': ' + err.message);
+  }
+)
+
+mongoose.connection.on('error', err => {
+  console.log(config.mongoServerError + ': ' + err.message);
+})
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Server disconnected from host (MongoDB Atlas).')
+})
 
 // configure and implement swagger UI for API testing
 const options = {
@@ -62,7 +77,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
 
 // APIs
-app.use('/api', EmployeeAPI);
+app.use('/api/employees', EmployeeAPI);
 
 
 // Wire-up the Express server.
