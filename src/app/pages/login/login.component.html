@@ -1,11 +1,21 @@
-<div>
-    <h1>Employee Sign-in</h1>
-    <h3>Enter Valid Employee ID to continue</h3>
+<!-- 
+Title: login.component.html
+Author: William Watlington
+Date: 14 January 2023
+Description: html for login component
+-->
 
-    <div>
+<div class="flex-container">
+    <div class="login"> 
+        <img src="../../../assets/nodebucket-logo.png">
+        <h3>login</h3>
+        <hr>
+        <p-messages [(value)]="errorMessages" [enableService]="false"></p-messages>
+        
         <h4 class="errors"></h4>
-        <form>
-
+        <form [formGroup]="loginForm" (ngSubmit)="login(); loginForm.reset()">
+            <input type="text" formControlName="empId" placeholder="employee ID">
+            <button type="submit" [disabled]="!loginForm.valid">submit</button>
         </form>
     </div>
 </div>

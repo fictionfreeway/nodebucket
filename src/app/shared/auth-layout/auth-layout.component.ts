@@ -1,3 +1,10 @@
+/* 
+Title: auth-layout.component.ts
+Author: William Watlington
+Date: 14 January 2023
+Description: auth layout component
+*/
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({

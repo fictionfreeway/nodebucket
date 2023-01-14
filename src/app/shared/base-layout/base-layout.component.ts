@@ -1,3 +1,10 @@
+/* 
+Title: base-layout.component.ts
+Author: William Watlington
+Date: 14 January 2023
+Description: base layout component for nodebucket app
+*/
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({

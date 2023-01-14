@@ -1,0 +1,73 @@
+/* 
+Title: login.component.css
+Author: William Watlington
+Date: 14 January 2023
+Description: login component styling
+*/
+
+.flex-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login {
+    width: 50%;
+    margin: 0 auto;
+    color: #222f5b;
+    border: 7px solid #946b2d;
+    padding: 3rem;
+    background-color: #fff;
+    min-height: 40%;
+    padding: 5rem;
+}
+
+.login h3 {
+    color: #0E1A40;
+    font-size: 2rem;
+    font-weight: 300;
+    text-align: center;
+    margin: 0;
+}
+
+.login img {
+    width: 40%;
+    display: block;
+    margin: 0 auto 2.5rem auto;
+}
+
+.login hr {
+    width: 20%;
+    background-color: #946b2d;
+    height: 3px;
+}
+
+.login input {
+    margin: 2rem auto;
+    display: block;
+    width: 50%;
+    font-size: 1.2rem;
+    padding: .3rem 1rem;
+    border: solid 3px #222f5b;
+    border-radius: 30px;
+}
+
+button {
+    background-color: #222f5b;
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+    border: solid 3px #946b2d;
+    border-radius: 30px;
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding: .3rem 2rem;
+    cursor: pointer;
+}
+
+.button:disabled, button[disabled] {
+    background-color: #434a63;
+    color: rgb(181, 181, 181);
+}
