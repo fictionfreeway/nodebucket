@@ -1,4 +1,4 @@
-/* 
+/*
 Title: employee-api.js
 Author: William Watlington
 Date: 10 January 2023
@@ -35,7 +35,7 @@ const config = require('../data/config.json');
  *        description: Server Exception
  *      '501':
  *        description: MongoDB Exception
- *          
+ *
  */
 router.get('/:empId', async(req, res) => {
     try {
@@ -47,15 +47,15 @@ router.get('/:empId', async(req, res) => {
                 res.status(501).send({
                     'err':  config.mongoServerError + '+ ' + err.message
                 })
-            } 
+            }
             // returns user document as JSON if no error encountered
             else {
                 console.log(result);
                 res.json(result);
             }
         })
-    } 
-    
+    }
+
     // return 500 and error message in case of server error
     catch(e) {
         console.log(e);
@@ -63,6 +63,76 @@ router.get('/:empId', async(req, res) => {
             'err': config.serverError
         })
     }
+})
+
+
+//find all tasks api
+router.get('/:empId/tasks', async(req,res) => {
+  try {
+    Employee.findOne({'empId': req.params.empId}, 'empId todo done', function(err, emp) {
+      if(err) {
+        console.log(err);
+        res.status(501).send({
+          'err': config.mongoServerError + ': ' + err.message
+        })
+      } else {
+        console.log(emp);
+        res.json(emp);
+      }
+    })
+  } catch(e) {
+    console.log(e);
+    res.status(500).send({
+      'err': config.serverError + ': ' + e.message
+    })
+  }
+})
+
+//create task api
+router.post('/:empId/tasks', async(req, res) => {
+  try {
+    Employee.findOne({'empId': req.params.empId}, function(err, emp) {
+      if(err) {
+        console.log(err);
+        res.status(501).send({
+          'err': config.mongoServerError + ': ' + err.message
+        })
+      } else {
+        console.log(emp);
+
+        if(emp) {
+          const newTask = {
+            text: req.body.text
+          }
+
+          emp.todo.push(newTask);
+
+          emp.save(function(err, updatedEmp) {
+            if(err) {
+              console.log(err);
+              res.status(501).send({
+                'err': config.mongoServerError + ': ' + err.message
+              })
+            } else {
+              console.log(updatedEmp);
+              res.json(updatedEmp);
+            }
+          })
+        } else {
+          res.status(401).send({
+            'message': 'EmployeeId: ' + req.params.empId + ' does not exist'
+          })
+        }
+
+      }
+    })
+  } catch {
+    console.log(e);
+    res.status(500).send({
+      'err': config.serverError + ': ' + e.message
+    })
+
+  }
 })
 
 module.exports = router;
