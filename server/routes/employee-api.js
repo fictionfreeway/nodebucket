@@ -66,8 +66,32 @@ router.get('/:empId', async(req, res) => {
 })
 
 
-//find all tasks api
+/**
+ * findAllTasks
+ * @openapi
+ * /api/employees/{empId}/tasks:
+ *  get:
+ *    tags:
+ *      - Employees
+ *    description: Gets all tasks for one employee
+ *    summary: returns all tasks for one employee
+ *    parameters:
+ *      - in: path
+ *        name: empId
+ *        schema:
+ *          type: number
+ *          description: empId to search for
+ *    responses:
+ *      '200':
+ *        description: Employee document
+ *      '500':
+ *        description: Server Exception
+ *      '501':
+ *        description: MongoDB Exception
+ *
+ */
 router.get('/:empId/tasks', async(req,res) => {
+  // gets all tasks for one empId and returns empId and todo/done arrays
   try {
     Employee.findOne({'empId': req.params.empId}, 'empId todo done', function(err, emp) {
       if(err) {
@@ -88,8 +112,47 @@ router.get('/:empId/tasks', async(req,res) => {
   }
 })
 
-//create task api
+
+/**
+ * createTask
+ * @openapi
+ * /api/employees/{empId}/tasks:
+ *  post:
+ *    tags:
+ *      - Employees
+ *    description: Creates new task 
+ *    summary: Creates new task
+ *    parameters:
+ *      - in: path
+ *        name: empId
+ *        schema:
+ *          type: number
+ *          description: empId to search for
+ *    requestBody:
+ *      description: task title
+ *      content:
+ *        application/json:
+ *          schema:
+ *            required:
+ *              - title
+ *              - dueDate
+ *            properties:
+ *              title:
+ *                type: string
+ *              dueDate:
+ *                type: string
+ *                format: date
+ *    responses:
+ *      '200':
+ *        description: Employee document
+ *      '500':
+ *        description: Server Exception
+ *      '501':
+ *        description: MongoDB Exception
+ *
+ */
 router.post('/:empId/tasks', async(req, res) => {
+  // gets single employee by empId, adds task to todo array
   try {
     Employee.findOne({'empId': req.params.empId}, function(err, emp) {
       if(err) {
@@ -102,7 +165,7 @@ router.post('/:empId/tasks', async(req, res) => {
 
         if(emp) {
           const newTask = {
-            text: req.body.text
+            text: req.body.title
           }
 
           emp.todo.push(newTask);
