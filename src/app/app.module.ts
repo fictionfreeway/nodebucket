@@ -1,4 +1,4 @@
-/* 
+/*
 Title: app.module.ts
 Author: William Watlington
 Date: 14 January 2023
@@ -26,6 +26,7 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContactComponent } from './pages/contact/contact.component';
 
 
 
@@ -35,7 +36,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     AuthLayoutComponent,
     BaseLayoutComponent,
-    LoginComponent
+    LoginComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     MessageModule,
-    MessagesModule,
+    MessagesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

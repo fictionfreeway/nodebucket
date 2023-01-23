@@ -120,7 +120,7 @@ router.get('/:empId/tasks', async(req,res) => {
  *  post:
  *    tags:
  *      - Employees
- *    description: Creates new task 
+ *    description: Creates new task
  *    summary: Creates new task
  *    parameters:
  *      - in: path
@@ -134,10 +134,10 @@ router.get('/:empId/tasks', async(req,res) => {
  *        application/json:
  *          schema:
  *            required:
- *              - title
+ *              - text
  *              - dueDate
  *            properties:
- *              title:
+ *              text:
  *                type: string
  *              dueDate:
  *                type: string
@@ -165,7 +165,7 @@ router.post('/:empId/tasks', async(req, res) => {
 
         if(emp) {
           const newTask = {
-            text: req.body.title
+            text: req.body.text
           }
 
           emp.todo.push(newTask);

@@ -1,4 +1,4 @@
-/* 
+/*
 Title: item.js
 Author: William Watlington
 Date: 18 January 2023
@@ -11,7 +11,7 @@ const Schema = mongoose.Schema;
 
 let itemSchema = new Schema({
   text: { type: String },
-  dueDate: { type: Date}
+  dueDate: { type: Date }
 })
 
 module.exports = itemSchema;
