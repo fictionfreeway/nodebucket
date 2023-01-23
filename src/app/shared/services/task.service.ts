@@ -1,0 +1,31 @@
+/*
+Title: task.service.ts
+Author: William Watlington
+Date: 20 January 2023
+Description: task service for nodebucket app
+*/
+
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { DefaultGridAutoDirective } from '@angular/flex-layout';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TaskService {
+
+  constructor(private http: HttpClient) { }
+
+  findAllTasks(empId: number): Observable<any> {
+    return this.http.get('/api/employees/' + empId + '/tasks');
+  }
+
+  createTask(empId: number, title: string, dueDate: number): Observable<any> {
+    console.log(`empID: ${empId} task: ${title} dueDate:${dueDate}`);
+    return this.http.post('/api/employees/' + empId + '/tasks', {
+      text: title,
+      dueDate: dueDate
+    })
+  }
+}

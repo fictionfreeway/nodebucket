@@ -1,4 +1,4 @@
-/* 
+/*
 Title: styles.css
 Author: William Watlington
 Date: 14 January 2023
@@ -6,8 +6,8 @@ Description: shared styles for nodebucket app
 */
 
 html, body { height: 100%; width: 100%;}
-body { 
-    margin: 0; 
+body {
+    margin: 0;
     font-family: "Open Sans", "Helvetica Neue", sans-serif;
     background-color: #0E1A40;
     color: #fff;

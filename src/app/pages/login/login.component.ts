@@ -1,4 +1,4 @@
-/* 
+/*
 Title: login.component.ts
 Author: William Watlington
 Date: 14 January 2023
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     empId: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])]
   })
 
-  constructor(private fb: FormBuilder, private router: Router, private cookieService: CookieService, 
+  constructor(private fb: FormBuilder, private router: Router, private cookieService: CookieService,
     private http: HttpClient, private employeeService: EmployeeService) {
       this.employee = {} as Employee;
      }
@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
       next: (res) => {
         // if employee id found by api, set login cookies to authorize user, otherwise return error for primeng to display
         if(res) {
+          console.log(res);
           this.employee = res;
           this.cookieService.set('session_user', this.employee.empId.toString(), 1);
           this.cookieService.set('session_name', `${this.employee.firstName} ${this.employee.lastName}`, 1);
