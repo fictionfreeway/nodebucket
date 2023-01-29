@@ -1,3 +1,9 @@
+/*
+Title: app-routing-module.ts
+Author: William Watlington
+Date: 20 January 2023
+Description: Angular routing for nodebucket app
+*/
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {BaseLayoutComponent} from "./shared/base-layout/base-layout.component";
