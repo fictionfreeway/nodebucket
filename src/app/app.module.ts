@@ -28,6 +28,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactComponent } from './pages/contact/contact.component';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 
 @NgModule({
@@ -51,7 +53,8 @@ import { ContactComponent } from './pages/contact/contact.component';
     FormsModule,
     ReactiveFormsModule,
     MessageModule,
-    MessagesModule
+    MessagesModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

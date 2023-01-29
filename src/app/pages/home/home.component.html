@@ -1,25 +1,54 @@
 <h2>tasks</h2>
 <div class="content">
   <div class="tasks-div" id="upcoming" >
-    <h3>upcoming</h3>
-    <div class="task" *ngFor="let item of todo"> {{item.text}} </div>
+    <h3>todo</h3>
+    <div
+    cdkDropList
+    class="drop-list-container"
+    #todoList="cdkDropList"
+    [cdkDropListData]="todo"
+    [cdkDropListConnectedTo]="[doneList]"
+    (cdkDropListDropped)="drop($event)">
+      <div class="task" *ngFor="let item of todo" cdkDrag id={{item._id}}>
+        {{item.text}}
+        <span class="delete-button material-symbols-outlined" (click)="showDeleteModal(item._id);">delete</span>
+      </div>
+    </div>
     <button id="new-task" type="button" (click)="showModal();">+ new task</button>
   </div>
-  <!-- <div class="tasks-div" id="due-now">
-    <h3>due today</h3>
-  </div> -->
   <div class="tasks-div" id="done">
     <h3>done</h3>
+    <div
+    cdkDropList
+    class="drop-list-container"
+    #doneList="cdkDropList"
+    [cdkDropListData]="done"
+    [cdkDropListConnectedTo]="[todoList]"
+    (cdkDropListDropped)="drop($event)">
+      <div class="task" *ngFor="let item of done" cdkDrag id={{item._id}}>
+        {{item.text}}
+        <span class="delete-button material-symbols-outlined" (click)="showDeleteModal(item._id);">delete</span>
+      </div>
+    </div>
   </div>
 </div>
-<div id="new-task-background"> <!-- (click)="hideModal();"> -->
-  <div id="new-task-form">
+<div id="new-task-background" class="modal-background">
+  <div id="new-task-form" class="modal">
     <h3>new task</h3>
     <button type="button" id="close-modal" (click)="hideModal()">close</button>
     <form [formGroup]="taskForm" (ngSubmit)="createTask(); taskForm.reset(); hideModal();">
       <input type="text" formControlName="text" name="text" placeholder="Task Title" required>
       <input type="text" formControlName="dueDate" name="dueDate" placeholder="Due Date" required onfocus="(this.type='date')" onfocusout="(this.type='text')">
-      <button id="submit-task" type="submit" [disabled]="!taskForm.valid">Submit</button>
+      <button id="submit-task" class="modal-button" type="submit" [disabled]="!taskForm.valid">Submit</button>
     </form>
   </div>
 </div>
+<div id="delete-modal-background" class="modal-background">
+  <div id="delete-confirmation" class="modal">
+    <h3>confirm deletion?</h3>
+    <button type="button" id="close-delete-modal" class="modal-close" (click)="hideDeleteModal()">close</button>
+    <button type="button" id="confirm-delete" class="modal-button" (click)="deleteTask()">delete</button>
+
+  </div>
+</div>
+

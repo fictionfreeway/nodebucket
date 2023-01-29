@@ -41,6 +41,8 @@ h2 {
   font-size: 1.5rem;
   padding: .7rem 0;
   border-radius: 15px;
+  cursor: move;
+  position: relative;
 }
 
 #new-task {
@@ -54,28 +56,7 @@ h2 {
   bottom: 2rem;
 }
 
-#new-task-background {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.521);
-  top: 0;
-  left: 0;
-  visibility: hidden;
-}
-
-#new-task-form {
-  background-color: #fff;
-  border: 5px solid #946B2D;
-  border-radius: 30px;
-  width: 40%;
-  margin: 35vh auto;
-  padding: 2rem;
-  z-index: 100;
-  position: relative;
-}
-
-#new-task-form h3 {
+.modal h3 {
   color: #0E1A40;
   font-size: 1.8rem;
   text-align: center;
@@ -91,7 +72,7 @@ h2 {
   font-size: 1.2rem;
 }
 
-#submit-task {
+.modal-button {
   background-color: #222f5b;
   color: #fff;
   display: block;
@@ -104,11 +85,67 @@ h2 {
   cursor: pointer;
 }
 
-#close-modal {
+.modal-close {
   position: absolute;
   right: 1rem;
   top: 2rem;
   color: #0E1A40;
   background-color: #fff;
   border: none;
+  cursor: pointer;
+}
+
+.modal {
+    background-color: #fff;
+  border: 5px solid #946B2D;
+  border-radius: 30px;
+  width: 40%;
+  margin: 35vh auto;
+  padding: 2rem;
+  z-index: 100;
+  position: relative;
+}
+
+.modal-background {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.521);
+  top: 0;
+  left: 0;
+  visibility: hidden;
+}
+
+.drop-list-container {
+  min-height: 400px;
+  width: 100%;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  box-shadow: 0 5px 5px -3px #946b2d4d,
+              0 8px 10px 1px #946b2d4d,
+              0 3px 14px 2px #946b2d4d;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drop-list-container.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.delete-button {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  color: red;
 }

@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employee } from 'src/app/shared/models/employee.interface';
 import { Item } from 'src/app/shared/models/item.interface';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
   todo: Item[];
   done: Item[];
   empId: number;
+  itemToDelete: string;
 
   taskForm: FormGroup = this.fb.group({
     text: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(35)])],
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
     this.employee = {} as Employee;
     this.todo = [];
     this.done = [];
+    this.itemToDelete = "";
 
     // get empId from cookie generated on login
     this.empId = parseInt(this.cookieService.get('session_user'), 10);
@@ -87,6 +90,76 @@ export class HomeComponent implements OnInit {
     if(newTaskForm) {
       newTaskForm.style.visibility = "hidden";
     }
+  }
+
+  // shows the delete confirmation modal
+  showDeleteModal(id: string) {
+    this.itemToDelete = id;
+    const deleteModal = document.getElementById('delete-modal-background');
+    if(deleteModal) {
+      deleteModal.style.visibility = 'visible';
+    }
+  }
+
+  // hides the delete confirmation modal
+  hideDeleteModal() {
+    this.itemToDelete = "";
+    const deleteModal = document.getElementById('delete-modal-background');
+    if(deleteModal) {
+      deleteModal.style.visibility = 'hidden';
+    }
+  }
+
+  // function to delete task using task service
+  deleteTask() {
+    console.log('deleting item ' + this.itemToDelete + " from employee " + this.empId);
+    this.taskService.deleteTask(this.empId, this.itemToDelete).subscribe({
+      next: (res) => {
+        this.employee = res;
+      },
+      error: (e) => {
+        console.log(e);
+      },
+      complete: () => {
+        this.todo = this.employee.todo;
+        this.done = this.employee.done;
+      }
+    })
+  }
+
+
+  // drop event function
+  drop(event: CdkDragDrop<any[]>) {
+    // reordering array if item moved to new position in same array
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.updateTaskList(this.empId, this.todo, this.done);
+    }
+    // transferring array item if item is moved to new list
+    else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+        this.updateTaskList(this.empId, this.todo, this.done);
+    }
+  }
+
+  // function for updating a task list using the task service
+  updateTaskList(empId: number, todo: Item[], done: Item[]) {
+    this.taskService.updateTask(empId, todo, done).subscribe({
+      next: (res) => {
+        this.employee = res;
+      },
+      error: (e) => {
+        console.log(e);
+      },
+      complete: () => {
+        this.todo = this.employee.todo;
+        this.done = this.employee.done;
+      }
+    })
   }
 }
 
