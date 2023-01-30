@@ -1,3 +1,10 @@
+/*
+Title: about.component.ts
+Author: William Watlington
+Date: 27 January 2023
+Description: about page component for nodebucket app
+*/
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({
