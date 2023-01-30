@@ -1,0 +1,37 @@
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 80%;
+  background-color: #fff;
+  border: 5px solid #946B2D;
+  border-radius: 30px;
+  margin: 8rem auto;
+  padding: 5rem;
+}
+
+.contact-container hr {
+  width: 70%;
+  height: 0;
+  border: 1px solid #946B2D;
+  margin-bottom: 4rem;
+}
+
+.contact-container h2 {
+  color: #0E1A40;
+  text-align: center;
+  width: 100%;
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.about-div {
+  background-color: #0E1A40;
+  width: 80%;
+  padding: 3rem;
+  border-radius: 30px;
+  text-align: left;
+  font-size: 1.2rem;
+  letter-spacing: .1rem;
+  line-height: 1.5rem;
+}
