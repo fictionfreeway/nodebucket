@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit {
   todo: Item[];
   done: Item[];
   empId: number;
-  itemToDelete: string;
 
   taskForm: FormGroup = this.fb.group({
     text: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(35)])],
@@ -35,7 +34,6 @@ export class HomeComponent implements OnInit {
     this.employee = {} as Employee;
     this.todo = [];
     this.done = [];
-    this.itemToDelete = "";
 
     // get empId from cookie generated on login
     this.empId = parseInt(this.cookieService.get('session_user'), 10);
@@ -93,27 +91,53 @@ export class HomeComponent implements OnInit {
   }
 
   // shows the delete confirmation modal
-  showDeleteModal(id: string) {
+/*   showDeleteModal(id: string) {
     this.itemToDelete = id;
     const deleteModal = document.getElementById('delete-modal-background');
     if(deleteModal) {
       deleteModal.style.visibility = 'visible';
     }
-  }
+  } */
 
   // hides the delete confirmation modal
-  hideDeleteModal() {
+/*   hideDeleteModal() {
     this.itemToDelete = "";
     const deleteModal = document.getElementById('delete-modal-background');
     if(deleteModal) {
       deleteModal.style.visibility = 'hidden';
     }
+  } */
+
+  // show delete confirmation under task
+  showDeleteConfirm(el: any) {
+    const deleteMenu = el.nextSibling;
+    const taskEl = el.parentElement;
+    deleteMenu.style.visibility = "visible";
+    deleteMenu.style.height = "6rem";
+    deleteMenu.style.top = "2rem";
+    taskEl.style.borderRadius = "15px 15px 0 0";
+    el.style.color = "red";
+    taskEl.style.marginBottom = "7rem";
+  }
+
+  // hide delete confirmation
+  async hideDeleteConfirm(el: any) {
+    const deleteMenu = el.parentElement.parentElement;
+    const taskEl = deleteMenu.parentElement;
+    const deleteIcon = deleteMenu.previousSibling;
+    deleteIcon.style.color = "#fff";
+    deleteMenu.style.height = "0";
+    deleteMenu.style.top = "0";
+    taskEl.style.borderRadius = "15px";
+    taskEl.style.marginBottom = "0";
+    await new Promise(resolve => setTimeout(resolve, 200));
+    deleteMenu.style.visibility = "hidden";
   }
 
   // function to delete task using task service
-  deleteTask() {
-    console.log('deleting item ' + this.itemToDelete + " from employee " + this.empId);
-    this.taskService.deleteTask(this.empId, this.itemToDelete).subscribe({
+  deleteTask(id: string) {
+    console.log('deleting item ' + id + " from employee " + this.empId);
+    this.taskService.deleteTask(this.empId, id).subscribe({
       next: (res) => {
         this.employee = res;
       },
@@ -126,7 +150,6 @@ export class HomeComponent implements OnInit {
       }
     })
   }
-
 
   // drop event function
   drop(event: CdkDragDrop<any[]>) {

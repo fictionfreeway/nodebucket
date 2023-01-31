@@ -43,6 +43,9 @@ h2 {
   border-radius: 15px;
   cursor: move;
   position: relative;
+  transition-property: border-radius, margin-bottom;
+  transition-duration: .4s;
+  transform-style: preserve-3d;
 }
 
 #new-task {
@@ -96,7 +99,7 @@ h2 {
 }
 
 .modal {
-    background-color: #fff;
+  background-color: #fff;
   border: 5px solid #946B2D;
   border-radius: 30px;
   width: 40%;
@@ -147,5 +150,40 @@ h2 {
 }
 
 .delete-button:hover {
+  color: red;
+}
+
+.confirm-deletion {
+  font-size: 1rem;
+  padding-top: 1rem;
+  margin-top: 0rem;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  position: absolute;
+  background-color: #0E1A40;
+  margin-top: .5rem;
+  width: 100%;
+  border-radius: 0 0 30px 30px;
+  transition-property: height, top;
+  transition-duration: .4s;
+  top: 0;
+  transform: translateZ(-10px);
+}
+
+.delete-options {
+  margin-top: 1rem;
+}
+
+.delete-options span {
+  margin: 0 1rem;
+  cursor: pointer;
+}
+
+.confirm-button:hover {
+  color: rgb(1, 255, 1);
+}
+
+.cancel-button:hover {
   color: red;
 }
